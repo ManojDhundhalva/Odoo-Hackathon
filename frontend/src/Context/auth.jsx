@@ -12,15 +12,15 @@ export const AuthProvider = ({ children }) => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
 
-  useEffect(() => {
-    if (window.localStorage.getItem("token") === null) {
-      setIsLoggedIn(false);
-      navigate("/login");
-    } else {
-      setIsLoggedIn(true);
-      navigate("/");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (window.localStorage.getItem("token") === null) {
+  //     setIsLoggedIn(false);
+  //     navigate("/login");
+  //   } else {
+  //     setIsLoggedIn(true);
+  //     navigate("/");
+  //   }
+  // }, []);
 
   const LogOut = () => {
     window.localStorage.removeItem("token");
