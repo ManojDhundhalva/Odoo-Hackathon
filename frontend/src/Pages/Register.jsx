@@ -308,7 +308,7 @@ export default function Register() {
                 label="Confirm - Password"
                 variant="outlined"
                 name="confirm-password"
-                type={showPassword ? "text" : "password"}
+                type={showConfirmPassword ? "text" : "password"}
                 fullWidth
                 required
                 size="small"
@@ -351,6 +351,7 @@ export default function Register() {
                   required
                   fullWidth
                   label="Role"
+                  name="role"
                   value={role}
                   onChange={(e) => {
                     setRole(e.target.value);
@@ -369,7 +370,7 @@ export default function Register() {
                       Select Role
                     </Typography>
                   </MenuItem>
-                  <MenuItem value="a">
+                  <MenuItem value="user">
                     <Typography
                       fontWeight="bold"
                       sx={{ fontFamily: "Quicksand" }}
@@ -377,7 +378,7 @@ export default function Register() {
                       Individual / business
                     </Typography>
                   </MenuItem>
-                  <MenuItem value="b" sx={{ fontWeight: "bold" }}>
+                  <MenuItem value="disposer" sx={{ fontWeight: "bold" }}>
                     <Typography
                       fontWeight="bold"
                       sx={{ fontFamily: "Quicksand" }}
@@ -398,7 +399,7 @@ export default function Register() {
                   backgroundColor: "#25396F",
                 }}
               >
-                {!loading ? "Sign In" : "Signing In"}
+                {!loading ? "Sign Up" : "Signing Up"}
                 {loading && <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>}
                 {loading && (
                   <CircularProgress

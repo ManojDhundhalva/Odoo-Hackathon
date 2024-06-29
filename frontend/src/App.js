@@ -5,6 +5,7 @@ import Footer from "./Components/Footer";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import HomePage from "./Pages/HomePage";
+import Profile from "./Pages/Profile";
 import History from "./Pages/History"; // Import the History component
 import "./App.css";
 
@@ -27,6 +28,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/" element={<HomePage />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/history" element={<History />} /> {/* Add History route */}
       </Routes>
       {!isHiddenPath && <Footer />}
