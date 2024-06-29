@@ -42,11 +42,29 @@ const Profile = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [location, setLocation] = useState("");
 
+  const [processingMethods, setProcessingMethods] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [licenceNumber, setLicenceNumber] = useState("");
+
   const [isValidPhone, setIsValidPhone] = useState(false);
   const navigate = useNavigate();
   const { setIsLoggedIn, verifyUser, LogOut } = useAuth();
 
   const [justVerify, setJustVerify] = useState(false);
+
+  const handlePhoneNumber = (e) => {
+    const input = e.target.value;
+    if (/^\d*$/.test(input) && input.length <= 10) {
+      setPhoneNumber(input);
+    }
+  };
+
+  const handleQuantity = (e) => {
+    const input = e.target.value;
+    if (/^\d*$/.test(input)) {
+      setQuantity(input);
+    }
+  };
 
   const validatePhoneNumber = (input) => {
     if (input) {
@@ -66,7 +84,7 @@ const Profile = () => {
       },
     },
   });
-  
+
   const UpdateProfile = async () => {
     setJustVerify(true);
     if (name === "" || address === "" || !isValidPhone || location === "") {
@@ -212,7 +230,7 @@ const Profile = () => {
     <>
       <div
         data-aos="fade-up"
-        style={{ margin: "2em", fontFamily: "Quicksand", fontWeight: "600" }}
+        style={{ fontFamily: "Quicksand", fontWeight: "600" }}
       >
         <ThemeProvider theme={theme}>
           <Grid container spacing={3} justifyContent="center">
@@ -222,6 +240,7 @@ const Profile = () => {
                   maxWidth: "100%",
                   justifyContent: "center",
                   textAlign: "center",
+                  boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
                 }}
               >
                 <CardMedia
@@ -279,8 +298,9 @@ const Profile = () => {
                     <Grid item xs={10} style={{ marginTop: "1em" }}>
                       <TextField
                         id="standard-helperText-1"
-                        label="First Name"
+                        label="Name"
                         value={name}
+                        size="small"
                         onChange={(e) => {
                           setName(e.target.value);
                         }}
@@ -293,6 +313,12 @@ const Profile = () => {
                             ? "Please enter a valid name containing only letters."
                             : "")
                         }
+                        sx={{
+                          "& .MuiOutlinedInput-root": {
+                            borderRadius: "12px",
+                            fontWeight: "bold",
+                          },
+                        }}
                       />
                     </Grid>
                     <Grid item xs={10} style={{ marginTop: "0.4em" }}>
@@ -300,11 +326,18 @@ const Profile = () => {
                         id="standard-helperText-4"
                         label="Username"
                         value={userName}
+                        size="small"
                         InputProps={{
                           readOnly: true,
                         }}
                         fullWidth
                         autoComplete="off"
+                        sx={{
+                          "& .MuiOutlinedInput-root": {
+                            borderRadius: "12px",
+                            fontWeight: "bold",
+                          },
+                        }}
                       />
                     </Grid>
                     <Grid item xs={10}>
@@ -312,11 +345,18 @@ const Profile = () => {
                         id="outlined-read-only-input-5"
                         label="Email"
                         value={email}
+                        size="small"
                         InputProps={{
                           readOnly: true,
                         }}
                         fullWidth
                         autoComplete="off"
+                        sx={{
+                          "& .MuiOutlinedInput-root": {
+                            borderRadius: "12px",
+                            fontWeight: "bold",
+                          },
+                        }}
                       />
                     </Grid>
                     <Grid item xs={10} style={{ marginTop: "0.4em" }}>
@@ -324,18 +364,26 @@ const Profile = () => {
                         id="standard-helperText-4"
                         label="Type"
                         value={type}
+                        size="small"
                         InputProps={{
                           readOnly: true,
                         }}
                         fullWidth
                         autoComplete="off"
+                        sx={{
+                          "& .MuiOutlinedInput-root": {
+                            borderRadius: "12px",
+                            fontWeight: "bold",
+                          },
+                        }}
                       />
                     </Grid>
                     <Grid item xs={10} style={{ marginTop: "0.4em" }}>
                       <TextField
-                        id="standard-helperText-1"
+                        id="address"
                         label="Address"
                         value={address}
+                        size="small"
                         onChange={(e) => {
                           setAddress(e.target.value);
                         }}
@@ -344,30 +392,40 @@ const Profile = () => {
                         error={justVerify && address === ""}
                         helperText={
                           justVerify &&
-                          (address === "" ? "address cnnnot be empty." : "")
+                          (address === "" ? "address cannot be empty." : "")
                         }
                         multiline
                         rows={3}
+                        sx={{
+                          "& .MuiOutlinedInput-root": {
+                            borderRadius: "12px",
+                            fontWeight: "bold",
+                          },
+                        }}
                       />
                     </Grid>
                     <Grid item xs={10} style={{ marginTop: "0.4em" }}>
                       <TextField
-                        id="standard-helperText-8"
+                        size="small"
+                        id="phoneNumber"
                         label="Phone No."
                         value={phoneNumber}
-                        onChange={(e) => {
-                          validatePhoneNumber(e.target.value);
-                          setPhoneNumber(e.target.value);
-                        }}
+                        onChange={handlePhoneNumber}
                         fullWidth
                         autoComplete="off"
-                        error={!isValidPhone && justVerify}
+                        error={justVerify && phoneNumber === ""}
                         helperText={
                           justVerify &&
-                          (!isValidPhone
+                          (phoneNumber === ""
                             ? "Please enter a 10-digit number."
                             : "")
                         }
+                        sx={{
+                          "& .MuiOutlinedInput-root": {
+                            borderRadius: "12px",
+                            fontWeight: "bold",
+                          },
+                        }}
                       />
                     </Grid>
                     <Grid
@@ -376,7 +434,8 @@ const Profile = () => {
                       style={{ marginTop: "0.4em" }}
                       id="searchBoxContainer"
                     >
-                      <PlaceOutlinedIcon /> Location
+                      <PlaceOutlinedIcon /> Location{" "}
+                      <span style={{ color: "lightgray" }}>(Edit)</span>
                     </Grid>
                     <Grid
                       item
@@ -384,25 +443,106 @@ const Profile = () => {
                       style={{ marginTop: "0.4em" }}
                       id="searchBoxContainer"
                     ></Grid>
-
-                    <Grid></Grid>
-
                     <Grid item xs={10} style={{ marginTop: "0.4em" }}>
                       <TextField
                         id="location"
                         label="Location"
-                        value={location}
-                        onChange={(e) => {
-                          setLocation(e.target.value);
+                        size="small"
+                        value={location === "" ? "N/A" : location}
+                        InputProps={{
+                          readOnly: true,
                         }}
-                        error={justVerify && location === ""}
-                        helperText={
-                          justVerify &&
-                          (location === "" ? "Please select your location" : "")
-                        }
+                        sx={{
+                          "& .MuiOutlinedInput-root": {
+                            borderRadius: "12px",
+                            fontWeight: "bold",
+                          },
+                        }}
                         fullWidth
                       />
                     </Grid>
+                    {window.localStorage.getItem("role") === "disposer" ? (
+                      <>
+                        <Grid item xs={10} style={{ marginTop: "0.4em" }}>
+                          <TextField
+                            size="small"
+                            id="Processing-Methods"
+                            label="Processing Methods"
+                            value={processingMethods}
+                            onChange={(e) => {
+                              setProcessingMethods(e.target.value);
+                            }}
+                            fullWidth
+                            autoComplete="off"
+                            error={justVerify && processingMethods === ""}
+                            helperText={
+                              justVerify &&
+                              (processingMethods === ""
+                                ? "Processing Methods cannot be empty."
+                                : "")
+                            }
+                            sx={{
+                              "& .MuiOutlinedInput-root": {
+                                borderRadius: "12px",
+                                fontWeight: "bold",
+                              },
+                            }}
+                          />
+                        </Grid>
+                        <Grid item xs={10} style={{ marginTop: "0.4em" }}>
+                          <TextField
+                            size="small"
+                            id="Processing-Methods"
+                            label="Processing Methods"
+                            value={quantity}
+                            onChange={handleQuantity}
+                            fullWidth
+                            autoComplete="off"
+                            error={justVerify && quantity === ""}
+                            helperText={
+                              justVerify &&
+                              (quantity === ""
+                                ? "Quantity cannot be empty."
+                                : "")
+                            }
+                            sx={{
+                              "& .MuiOutlinedInput-root": {
+                                borderRadius: "12px",
+                                fontWeight: "bold",
+                              },
+                            }}
+                          />
+                        </Grid>
+                        <Grid item xs={10} style={{ marginTop: "0.4em" }}>
+                          <TextField
+                            size="small"
+                            id="Licence-Number"
+                            label="Licence Number"
+                            value={licenceNumber}
+                            onChange={(e) => {
+                              setLicenceNumber(e.target.value);
+                            }}
+                            fullWidth
+                            autoComplete="off"
+                            error={justVerify && licenceNumber === ""}
+                            helperText={
+                              justVerify &&
+                              (licenceNumber === ""
+                                ? "Licence Number cannot be empty."
+                                : "")
+                            }
+                            sx={{
+                              "& .MuiOutlinedInput-root": {
+                                borderRadius: "12px",
+                                fontWeight: "bold",
+                              },
+                            }}
+                          />
+                        </Grid>
+                      </>
+                    ) : (
+                      <></>
+                    )}
                   </Grid>
                   <div style={{ textAlign: "center", marginTop: "1em" }}>
                     <Button
@@ -412,7 +552,19 @@ const Profile = () => {
                       style={{ marginTop: "1em", backgroundColor: "#2A386B" }}
                       sx={{ fontFamily: "Quicksand", fontWeight: "bold" }}
                     >
-                      {!loading ? "UPDATE" : "Updating..."}
+                      {!loading ? "Update" : "Updating"}
+                      {loading && (
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                      )}
+                      {loading && (
+                        <CircularProgress
+                          size={20}
+                          sx={{
+                            color: "white",
+                            right: 0,
+                          }}
+                        />
+                      )}
                     </Button>
                   </div>
                 </CardContent>
