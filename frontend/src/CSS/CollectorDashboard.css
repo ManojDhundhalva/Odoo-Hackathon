@@ -1,0 +1,40 @@
+.collector-dashboard {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .dashboard-heading {
+    text-align: center;
+    color:#0d2818;
+    margin-bottom: 20px;
+  }
+  
+  .tasks-container {
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .task-card {
+    width: 80%;
+    padding: 20px;
+    color:aliceblue;
+    border: 1px solid #000;
+    border-radius: 8px;
+    background-color:#296066;
+  }
+  
+  .task-card p {
+    margin: 5px 0;
+  }
+  
+  .task-card b {
+    color:aliceblue;
+  }
+  
+  .tasks-container :hover{
+    background-color: #075962;
+  }
+  
