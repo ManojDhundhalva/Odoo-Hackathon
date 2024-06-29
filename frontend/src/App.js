@@ -5,6 +5,7 @@ import Footer from "./Components/Footer";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import HomePage from "./Pages/HomePage";
+import History from "./Pages/History"; // Import the History component
 import "./App.css";
 
 const themeStyle = {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/" element={<HomePage />} />
+        <Route path="/history" element={<History />} /> {/* Add History route */}
       </Routes>
       {!isHiddenPath && <Footer />}
     </ThemeProvider>
