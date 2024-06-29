@@ -13,27 +13,30 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    setIsLoggedIn(window.localStorage.getItem("token") !== null);
+    if (window.localStorage.getItem("token") === null) {
+      setIsLoggedIn(false);
+      navigate("/login");
+    } else {
+      setIsLoggedIn(true);
+      navigate("/");
+    }
   }, []);
 
   const LogOut = () => {
     window.localStorage.removeItem("token");
     window.localStorage.removeItem("role");
     setIsLoggedIn(false);
-    navigate("/");
+    navigate("/login");
   };
 
-  useEffect(() => {
+  const verifyUser = () => {
     if (
-      !(
-        window.localStorage.getItem("token") !== null
-      )
+      window.localStorage.getItem("token") === null ||
+      window.localStorage.getItem("role") === null
     ) {
-      window.localStorage.removeItem("token");
-      setIsLoggedIn(false);
-      navigate("/");
+      LogOut();
     }
-  }, []);
+  };
 
   return (
     <authContext.Provider
@@ -43,6 +46,7 @@ export const AuthProvider = ({ children }) => {
         isLoggedIn,
         setIsLoggedIn,
         LogOut,
+        verifyUser,
       }}
     >
       {children}
