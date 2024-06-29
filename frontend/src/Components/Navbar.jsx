@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../Context/auth";
+import logo from '../images/image.png';
 import {
   IconButton,
   MenuItem,
@@ -101,7 +102,7 @@ function NavBar() {
     >
       <Grid item>
         <Typography fontWeight="bold" fontSize="large">
-          LOGO
+        <img src={logo} alt="Logo" style={{ width: '150px', height: 'auto' }} /> 
         </Typography>
       </Grid>
       <Grid item>

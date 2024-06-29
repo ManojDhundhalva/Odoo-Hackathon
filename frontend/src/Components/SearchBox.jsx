@@ -180,8 +180,9 @@ function SearchBox() {
                 backgroundColor: "lavender",
                 "&:hover": {
                   transform: "scale(1.01)",
-                  backgroundColor: "#2A386B",
+                  backgroundColor: "#296066",
                   color: "white",
+                  cursor: 'pointer',
                 },
               }}
             >

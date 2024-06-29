@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../CSS/CollectorDashboard.css';
 
-const tasks = [
+const initialTasks = [
   {
     username: 'User1',
     disposerName: 'Disposer1',
@@ -24,6 +24,21 @@ const tasks = [
 ];
 
 const CollectorDashboard = () => {
+  const [tasks, setTasks] = useState(initialTasks);
+
+  const handleStatusClick = (index) => {
+    const task = tasks[index];
+    if (task.status === 'Pending') {
+      const confirmChange = window.confirm('Are you sure you want to change the status to completed?');
+      if (confirmChange) {
+        const updatedTasks = tasks.map((t, i) => (
+          i === index ? { ...t, status: 'Completed' } : t
+        ));
+        setTasks(updatedTasks);
+      }
+    }
+  };
+
   return (
     <div className="collector-dashboard">
       <h1 className="dashboard-heading"><b>Collector Dashboard</b></h1>
@@ -33,7 +48,15 @@ const CollectorDashboard = () => {
             <div className="left-aligned">
               <p><b>Username:</b> {task.username}</p>
               <p><b>Time Slot:</b> {task.timeSlot}</p>
-              <p><b>Status:</b> {task.status}</p>
+              <p>
+                <b>Status:</b>
+                <span 
+                  className="status-update" 
+                  onClick={() => handleStatusClick(index)}
+                >
+                  {task.status}
+                </span>
+              </p>
             </div>
             <div className="right-aligned">
               <p><b>Disposer Name:</b> {task.disposerName}</p>
