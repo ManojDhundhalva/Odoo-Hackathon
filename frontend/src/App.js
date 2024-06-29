@@ -5,14 +5,11 @@ import Footer from "./Components/Footer";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import HomePage from "./Pages/HomePage";
-<<<<<<< HEAD
-import History from "./Pages/History";
-import Appointments from "./Pages/Appointments"; // Import Appointments component
-=======
 import Profile from "./Pages/Profile";
-import AboutUS from "./Pages/AboutUs";
-import History from "./Pages/History"; // Import the History component
->>>>>>> bc8a30b9da15c9d8b47b1cd9fbf41c06d265ce56
+import AboutUs from "./Pages/AboutUs";
+import History from "./Pages/History";
+import Appointments from "./Pages/Appointments";
+import CollectorDashboard from "./Pages/CollectorDashboard";
 import "./App.css";
 
 const themeStyle = {
@@ -34,14 +31,11 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/" element={<HomePage />} />
-<<<<<<< HEAD
-        <Route path="/history" element={<History />} />
-        <Route path="/appointments" element={<Appointments />} /> {/* Add Appointments route */}
-=======
         <Route path="/profile" element={<Profile />} />
-        <Route path="/about-us" element={<AboutUS />} />
-        <Route path="/history" element={<History />} /> {/* Add History route */}
->>>>>>> bc8a30b9da15c9d8b47b1cd9fbf41c06d265ce56
+        <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/appointments" element={<Appointments />} />
+        <Route path="/history" element={<History />} />
+        <Route path="/collectorDashboard" element={<CollectorDashboard />} />
       </Routes>
       {!isHiddenPath && <Footer />}
     </ThemeProvider>

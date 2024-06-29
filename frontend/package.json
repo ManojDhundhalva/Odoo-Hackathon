@@ -16,11 +16,8 @@
     "calendar": "^0.1.1",
     "mdb-react-ui-kit": "^7.2.0",
     "react": "^18.3.1",
-<<<<<<< HEAD
-    "react-calendar": "^5.0.0",
-=======
     "react-bootstrap": "^2.10.3",
->>>>>>> bc8a30b9da15c9d8b47b1cd9fbf41c06d265ce56
+    "react-calendar": "^5.0.0",
     "react-dom": "^18.3.1",
     "react-hot-toast": "^2.4.1",
     "react-router-dom": "^6.22.3",
