@@ -192,6 +192,7 @@ function SearchBox() {
                 <Typography fontWeight="bold">{item.username}</Typography>
                 <Typography fontWeight="bold">{item.type}</Typography>
               </Grid>
+
             </Grid>
           ))}
       </Grid>

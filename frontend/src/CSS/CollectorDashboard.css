@@ -1,7 +1,7 @@
 .collector-dashboard {
   padding: 20px;
   font-family: Arial, sans-serif;
-  height: 100vh;
+  min-height: 100vh; /* Changed to min-height to allow scrolling if needed */
 }
 
 .dashboard-heading {
@@ -34,7 +34,7 @@
 }
 
 .task-card .left-aligned {
-  font-size: 20px; /* Larger font size for left-aligned content */
+  font-size: 18px; /* Larger font size for left-aligned content */
 }
 
 .task-card .right-aligned {
@@ -46,6 +46,15 @@
   color: aliceblue;
 }
 
-.tasks-container :hover {
+.task-card:hover {
   background-color: #075962;
+}
+
+.status-update {
+  cursor: pointer;
+  color: #00aaff;
+}
+
+.status-update:hover {
+  text-decoration: underline;
 }
