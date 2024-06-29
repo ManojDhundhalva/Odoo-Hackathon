@@ -31,7 +31,7 @@ export default function Login() {
   const [loading, setloading] = useState(false);
   const [justVerify, setJustVerify] = useState(false);
   const [validPassword, setValidPassword] = useState(false);
-  const { setIsLoggedIn, LogOut } = useAuth();
+  const { setIsLoggedIn, setRole, LogOut } = useAuth();
 
   const [isAlert, setIsAlert] = useState(false);
   // const navigate = useNavigate();
@@ -72,9 +72,11 @@ export default function Login() {
         password: password,
       })
       .then((response) => {
-        const { token } = response.data;
+        const { token, role } = response.data;
         localStorage.setItem("token", JSON.stringify(token));
+        localStorage.setItem("role", JSON.stringify(role));
         setIsLoggedIn(true);
+        setRole(role);
         navigate("/");
       })
       .catch((error) => {

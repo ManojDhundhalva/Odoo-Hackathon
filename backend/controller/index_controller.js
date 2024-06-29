@@ -29,7 +29,7 @@ export const create_session = async (req, res) => {
         }
 
         const token = generateToken(user);
-        return res.status(200).json({ token: token });
+        return res.status(200).json({ token: token, role: user.role });
 
     } catch (error) {
         console.log('Error: ', error);
