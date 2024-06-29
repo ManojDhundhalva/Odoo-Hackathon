@@ -12,21 +12,11 @@ import {
 } from "@mui/material";
 import { useNavigate, Link } from "react-router-dom";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-
-const users = [
-  { username: "user1", type: "type1" },
-  { username: "user2", type: "type2" },
-  { username: "user3", type: "type3" },
-  { username: "user4", type: "type4" },
-  { username: "user5", type: "type5" },
-  { username: "user6", type: "type6" },
-  { username: "user7", type: "type7" },
-  { username: "user8", type: "type8" },
-  { username: "user9", type: "type9" },
-  { username: "user10", type: "type10" },
-];
+import { useGlobal } from "../Context/globalData";
 
 function SearchBox() {
+  const { users } = useGlobal();
+
   const [search, setSearch] = useState("");
   const [type, setType] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -85,12 +75,11 @@ function SearchBox() {
                 }}
               >
                 <MenuItem value="">Select Role</MenuItem>
-                <MenuItem value="type1">
-                  <Typography fontWeight="bold">type1</Typography>
-                </MenuItem>
-                <MenuItem value="type2" sx={{ fontWeight: "bold" }}>
-                  <Typography fontWeight="bold">type2</Typography>
-                </MenuItem>
+                {users.map((item, index) => (
+                  <MenuItem key={index} value={item.type}>
+                    <Typography fontWeight="bold">{item.type}</Typography>
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Grid>
