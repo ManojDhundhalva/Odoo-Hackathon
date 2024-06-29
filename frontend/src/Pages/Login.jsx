@@ -3,53 +3,48 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
+import {
+  Grid,
+  IconButton,
+  InputAdornment,
+  CircularProgress,
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import Form from "react-bootstrap/Form";
-
-// import BackgroundVideo from '../Context/backgroundVideo';
-
-// import { useFirebase } from '../Context/Firebase';
-import Alert from "@mui/material/Alert";
-
-// import Alert from "react-bootstrap/Alert";
-// import "../CSS/Login.css";
-
+import { toast } from "react-hot-toast";
 import { useAuth } from "../Context/auth.jsx";
 import axios from "axios";
 import config from "../config.js";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import PersonIcon from "@mui/icons-material/Person";
+import VpnKeyRoundedIcon from "@mui/icons-material/VpnKeyRounded";
 
 const defaultTheme = createTheme();
 
 export default function Login() {
   const [loading, setloading] = useState(false);
-  const [Emailcheck, setEmailcheck] = useState(false);
-  const [passwordcheck, setpasswordcheck] = useState(false);
   const [justVerify, setJustVerify] = useState(false);
-
-  //   const [email, setEmail] = useState("");
-  //   const [password, setPassword] = useState("");
   const [validPassword, setValidPassword] = useState(false);
   const { setIsLoggedIn, setRole, LogOut } = useAuth();
 
   const [isAlert, setIsAlert] = useState(false);
   // const navigate = useNavigate();
 
-  //   const handleSubmit = async (e) => {};
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   const handlePasswordofLogin = (e) => {
     const input = e.target.value;
-    // setpasswordcheck(true);
     setPassword(input);
     if (input.length < 8) {
       setValidPassword(false);
@@ -72,13 +67,10 @@ export default function Login() {
     }
     setloading(true);
     await axios
-      .post(
-        (config.BACKEND_API) + "/create-session",
-        {
-          emailUsername: emailUsername,
-          password: password,
-        }
-      )
+      .post(config.BACKEND_API + "/create-session", {
+        emailUsername: emailUsername,
+        password: password,
+      })
       .then((response) => {
         const { token, role } = response.data;
         localStorage.setItem("token", JSON.stringify(token));
@@ -88,20 +80,9 @@ export default function Login() {
         navigate("/");
       })
       .catch((error) => {
-        setIsAlert(true);
-        // if (error.response.status === 403) {
-        //   LogOut();
-        // }
-        // if (error.response?.status === 401) {
-        //   // setEmailUsername("");
-        //   // setPassword("");
-        //   //   alert("Invalid Username/Email or Password!");
-        //   console.log("Error: 401 -> Login");
-        // } else {
-        //   console.error("Error: ", error);
-        // }
-
+        toast.error("Invalid credentials");
         console.error("Error: ", error);
+        // LogOut();
       });
     setloading(false);
   };
@@ -149,12 +130,13 @@ export default function Login() {
             >
               <TextField
                 id="standard-basic-1"
-                variant="standard"
+                variant="outlined"
                 margin="normal"
                 required
                 fullWidth
                 label="Username / Email Address"
                 name="email"
+                size="small"
                 autoFocus
                 value={emailUsername}
                 onChange={(e) => {
@@ -166,32 +148,36 @@ export default function Login() {
                     fontWeight: "bold",
                     color: "#25396F",
                   },
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <PersonIcon sx={{ color: "#02294F" }} />
+                    </InputAdornment>
+                  ),
                 }}
                 error={justVerify && emailUsername === ""}
                 helperText={
                   justVerify &&
                   (emailUsername == "" ? "This field cannot be empty." : "")
                 }
-                autoComplete="off"
-              />
-              <TextField
-                id="standard-basic-2"
-                variant="standard"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                onChange={handlePasswordofLogin}
-                value={password}
-                InputProps={{
-                  style: {
-                    fontFamily: "Quicksand",
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "12px",
                     fontWeight: "bold",
-                    color: !validPassword ? "#f44336" : "#25396F",
                   },
                 }}
+              />
+              <TextField
+                onChange={handlePasswordofLogin}
+                value={password}
+                margin="normal"
+                id="password"
+                label="Password"
+                variant="outlined"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                fullWidth
+                required
+                size="small"
                 error={justVerify && (!validPassword || password === "")}
                 helperText={
                   justVerify &&
@@ -201,7 +187,35 @@ export default function Login() {
                     ? "The password must contain at least 8 digits."
                     : "")
                 }
-                autoComplete="off"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <VpnKeyRoundedIcon sx={{ color: "#02294F" }} />
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? (
+                          <Visibility sx={{ color: "#02294F" }} />
+                        ) : (
+                          <VisibilityOff sx={{ color: "#02294F" }} />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "12px",
+                    fontWeight: "bold",
+                  },
+                }}
               />
               <Button
                 type="submit"
@@ -217,34 +231,21 @@ export default function Login() {
                 {!loading ? "Sign In" : "Signing In...."}
               </Button>
               <Grid container>
-                <Grid item xs={12}>
-                  {window.localStorage.getItem("token") === null && isAlert && (
-                    <Alert
-                      variant="filled"
-                      severity="error"
-                      style={{ fontFamily: "Quicksand", fontWeight: "600" }}
-                    >
-                      Invalid Email and/or Password
-                    </Alert>
-                  )}
-                </Grid>
-                <Grid item xs={12}>
-                  <Button
-                    color="secondary"
-                    onClick={() => {
-                      navigate("/register");
-                    }}
-                    variant="text"
-                    style={{
-                      fontFamily: "Quicksand",
-                      fontWeight: "bold",
-                      color: "#03045e",
-                      textDecoration: "underline",
-                    }}
-                  >
-                    Don't have an account? Sign Up
-                  </Button>
-                </Grid>
+                <Button
+                  color="secondary"
+                  onClick={() => {
+                    navigate("/register");
+                  }}
+                  variant="text"
+                  style={{
+                    fontFamily: "Quicksand",
+                    fontWeight: "bold",
+                    color: "#03045e",
+                    textDecoration: "underline",
+                  }}
+                >
+                  Don't have an account? Sign Up
+                </Button>
               </Grid>
             </Box>
           </Box>

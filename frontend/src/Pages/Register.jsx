@@ -3,51 +3,56 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
+import {
+  Box,
+  CircularProgress,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  FormControl,
+} from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import Form from 'react-bootstrap/Form';
-
-// import BackgroundVideo from '../Context/backgroundVideo';
-
-import Alert from "@mui/material/Alert";
 import axios from "axios";
-// import Alert from 'react-bootstrap/Alert';
-// import '../CSS/Login.css';
-
 import { Select, MenuItem } from "@mui/material";
 import config from "../config.js";
 import { useAuth } from "../Context/auth.jsx";
+import { toast } from "react-hot-toast";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const defaultTheme = createTheme();
 
 export default function Register() {
   const [loading, setloading] = useState(false);
-  const [Emailcheck, setEmailcheck] = useState(false);
-  const [passwordcheck, setpasswordcheck] = useState(false);
   const [justVerify, setJustVerify] = useState(false);
-  //   const [email, setEmail] = useState("");
-  //   const [password, setPassword] = useState("");
   const [validPassword, setValidPassword] = useState(false);
-  const [isAlert, setIsAlert] = useState(false);
-  //   const navigate = useNavigate();
+
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const handleClickShowConfirmPassword = () =>
+    setShowConfirmPassword((show) => !show);
+
+  const handleMouseDownConfirmPassword = (event) => {
+    event.preventDefault();
+  };
 
   const handlePasswordofLogin = (e) => {
     const input = e.target.value;
-    setpasswordcheck(true);
     setPassword(input);
     if (input.length < 8) {
       setValidPassword(false);
-      return;
     } else {
       setValidPassword(true);
     }
@@ -81,7 +86,7 @@ export default function Register() {
     setloading(true);
     if (password === repassword) {
       await axios
-        .post((config.BACKEND_API) + "/signup", {
+        .post(config.BACKEND_API + "/signup", {
           username: username,
           email: email,
           name: name,
@@ -90,25 +95,19 @@ export default function Register() {
         })
         .then((response) => {
           if (response.status === 201) {
+            toast.success("Registered");
             navigate("/login");
           }
         })
         .catch((error) => {
-          setIsAlert(true);
-          // if (error.response.status === 403) {
-          //   LogOut();
-          // }
-          // if (error.response?.status === 409) {
-          // } else {
-          //   console.error("Error: ", error);
-          // }
-
+          toast.error("Invalid credentials");
           console.error("Error: ", error);
+          // LogOut();
         });
     } else {
       setPassword("");
       setRePassword("");
-      alert("Passwords do not match!");
+      toast.error("Passwords do not match!");
     }
     setloading(false);
   };
@@ -128,8 +127,7 @@ export default function Register() {
               boxShadow: "0px 4px 8px #caf0f8",
             }}
             sx={{
-              marginTop: 12,
-              marginBottom: 12,
+              marginY: 8,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -160,8 +158,9 @@ export default function Register() {
             >
               <TextField
                 id="standard-basic-1"
-                variant="standard"
+                variant="outlined"
                 margin="normal"
+                size="small"
                 required
                 fullWidth
                 label="Username"
@@ -182,17 +181,23 @@ export default function Register() {
                   justVerify &&
                   (username === "" ? "This field cannot be empty." : "")
                 }
-                autoComplete="off"
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "12px",
+                    fontWeight: "bold",
+                  },
+                }}
               />
               <TextField
                 id="standard-basic-2"
-                variant="standard"
+                variant="outlined"
                 margin="normal"
                 required
                 fullWidth
                 label="Name"
                 name="name"
                 autoFocus
+                size="small"
                 onChange={(e) => {
                   setName(e.target.value);
                 }}
@@ -208,14 +213,20 @@ export default function Register() {
                   justVerify &&
                   (name === "" ? "This field cannot be empty." : "")
                 }
-                autoComplete="off"
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "12px",
+                    fontWeight: "bold",
+                  },
+                }}
               />
               <TextField
                 id="standard-basic-3"
-                variant="standard"
+                variant="outlined"
                 margin="normal"
                 required
                 fullWidth
+                size="small"
                 label="Email Address"
                 name="email"
                 autoFocus
@@ -234,27 +245,25 @@ export default function Register() {
                   justVerify &&
                   (email === "" ? "This field cannot be empty." : "")
                 }
-                autoComplete="off"
-              />
-
-              <TextField
-                id="standard-basic-4"
-                variant="standard"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                onChange={handlePasswordofLogin}
-                value={password}
-                InputProps={{
-                  style: {
-                    fontFamily: "Quicksand",
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "12px",
                     fontWeight: "bold",
-                    color: !validPassword ? "#f44336" : "#25396F",
                   },
                 }}
+              />
+              <TextField
+                onChange={handlePasswordofLogin}
+                value={password}
+                margin="normal"
+                id="password"
+                label="Password"
+                variant="outlined"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                fullWidth
+                required
+                size="small"
                 error={justVerify && (!validPassword || password === "")}
                 helperText={
                   justVerify &&
@@ -264,61 +273,120 @@ export default function Register() {
                     ? "The password must contain at least 8 digits."
                     : "")
                 }
-                autoComplete="off"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? (
+                          <Visibility sx={{ color: "#02294F" }} />
+                        ) : (
+                          <VisibilityOff sx={{ color: "#02294F" }} />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "12px",
+                    fontWeight: "bold",
+                  },
+                }}
               />
               <TextField
-                id="standard-basic-5"
-                variant="standard"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Confirm - Password"
-                type="password"
                 onChange={(e) => {
                   setRePassword(e.target.value);
                 }}
+                margin="normal"
                 value={repassword}
-                InputProps={{
-                  style: {
-                    fontFamily: "Quicksand",
-                    fontWeight: "bold",
-                    color: repassword !== password ? "#f44336" : "#25396F",
-                  },
-                }}
+                id="confirm-password"
+                label="Confirm - Password"
+                variant="outlined"
+                name="confirm-password"
+                type={showPassword ? "text" : "password"}
+                fullWidth
+                required
+                size="small"
                 error={justVerify && repassword !== password}
                 helperText={
                   justVerify &&
                   (repassword !== password ? "password is not mathing" : "")
                 }
-                autoComplete="off"
-              />
-              <Grid
-                item
-                xs={10}
-                style={{ marginTop: "0.4em", fontFamily: "Quicksand" }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowConfirmPassword}
+                        onMouseDown={handleMouseDownConfirmPassword}
+                        edge="end"
+                      >
+                        {showConfirmPassword ? (
+                          <Visibility sx={{ color: "#02294F" }} />
+                        ) : (
+                          <VisibilityOff sx={{ color: "#02294F" }} />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
                 sx={{
-                  fontWeight: "bold",
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "12px",
+                    fontWeight: "bold",
+                  },
                 }}
-                id="searchBoxContainer"
-              >
-                Role *
-              </Grid>
-              <Select
-                value={role}
-                onChange={(e) => {
-                  setRole(e.target.value);
-                }}
-                displayEmpty
-                inputProps={{ "aria-label": "Without label" }}
-                fullWidth
-                error={justVerify && role === ""}
-              >
-                <MenuItem value="compostAgency">Compost Agency</MenuItem>
-                <MenuItem value="ngo">NGO</MenuItem>
-                <MenuItem value="donor">Donor</MenuItem>
-              </Select>
-
+              />
+              <FormControl size="small" fullWidth required margin="normal">
+                <InputLabel id="role-label">Role</InputLabel>
+                <Select
+                  margin="normal"
+                  labelId="role-label"
+                  id="role"
+                  required
+                  fullWidth
+                  label="Role"
+                  value={role}
+                  onChange={(e) => {
+                    setRole(e.target.value);
+                  }}
+                  error={justVerify && role === ""}
+                  sx={{
+                    borderRadius: "12px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  <MenuItem value="">
+                    <Typography
+                      fontWeight="bold"
+                      sx={{ fontFamily: "Quicksand" }}
+                    >
+                      Select Role
+                    </Typography>
+                  </MenuItem>
+                  <MenuItem value="a">
+                    <Typography
+                      fontWeight="bold"
+                      sx={{ fontFamily: "Quicksand" }}
+                    >
+                      Individual / business
+                    </Typography>
+                  </MenuItem>
+                  <MenuItem value="b" sx={{ fontWeight: "bold" }}>
+                    <Typography
+                      fontWeight="bold"
+                      sx={{ fontFamily: "Quicksand" }}
+                    >
+                      Disposer
+                    </Typography>
+                  </MenuItem>
+                </Select>
+              </FormControl>
               <Button
                 type="submit"
                 fullWidth
@@ -330,38 +398,35 @@ export default function Register() {
                   backgroundColor: "#25396F",
                 }}
               >
-                {!loading ? "Sign Up" : "Signing Up...."}
+                {!loading ? "Sign In" : "Signing In"}
+                {loading && <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>}
+                {loading && (
+                  <CircularProgress
+                    size={20}
+                    sx={{
+                      color: "white",
+                      right: 0,
+                    }}
+                  />
+                )}
               </Button>
               <Grid container>
-                <Grid item xs={12}>
-                  {isAlert && (
-                    <Alert
-                      variant="filled"
-                      severity="error"
-                      style={{ fontFamily: "Quicksand", fontWeight: "600" }}
-                    >
-                      User Already Exist !!
-                    </Alert>
-                  )}
-                </Grid>
-                <Grid item xs={12}>
-                  <Button
-                    color="secondary"
-                    onClick={() => {
-                      navigate("/login");
-                    }}
-                    variant="text"
-                    style={{
-                      fontFamily: "Quicksand",
-                      fontWeight: "bold",
-                      color: "ghostwhite",
-                      textDecoration: "underline",
-                      color: "#03045e",
-                    }}
-                  >
-                    Already have an account? Sign In
-                  </Button>
-                </Grid>
+                <Button
+                  color="secondary"
+                  onClick={() => {
+                    navigate("/login");
+                  }}
+                  variant="text"
+                  style={{
+                    fontFamily: "Quicksand",
+                    fontWeight: "bold",
+                    color: "ghostwhite",
+                    textDecoration: "underline",
+                    color: "#03045e",
+                  }}
+                >
+                  Already have an account? Sign In
+                </Button>
               </Grid>
             </Box>
           </Box>
