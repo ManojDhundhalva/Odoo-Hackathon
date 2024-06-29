@@ -7,6 +7,8 @@ import Register from "./Pages/Register";
 import HomePage from "./Pages/HomePage";
 import Profile from "./Pages/Profile";
 import AboutUs from "./Pages/AboutUs";
+import Profile from "./Pages/Profile";
+import AboutUs from "./Pages/AboutUs";
 import History from "./Pages/History";
 import Appointments from "./Pages/Appointments";
 import CollectorDashboard from "./Pages/CollectorDashboard";
@@ -31,6 +33,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/" element={<HomePage />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/appointments" element={<Appointments />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/appointments" element={<Appointments />} />
