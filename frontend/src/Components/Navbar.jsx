@@ -50,6 +50,9 @@ function NavBar() {
         <ListItem button onClick={() => navigate("/history")}>
           <ListItemText primary="History" />
         </ListItem>
+        <ListItem button onClick={() => navigate("/appointments")}>
+          <ListItemText primary="Appointments" />
+        </ListItem>
         {!isLoggedIn ? (
           <>
             <ListItem button onClick={() => navigate("/login")}>
@@ -87,7 +90,14 @@ function NavBar() {
       margin={0}
       justifyContent="space-between"
       alignItems="center"
-      sx={{ backgroundColor: "lavender",  }}
+      sx={{
+        backgroundColor: "transparent",
+        backdropFilter: "blur(10px)",
+        position: "sticky",
+        top: 0,
+        width: "100%",
+        zIndex: 1000, // Adjust the zIndex as needed
+      }}
     >
       <Grid item>
         <Typography fontWeight="bold" fontSize="large">
@@ -116,23 +126,70 @@ function NavBar() {
           </>
         ) : (
           <>
-            <Button variant="text" onClick={() => navigate("/")}>
+            <Button
+              variant="text"
+              onClick={() => navigate("/")}
+              sx={{
+                m: 1,
+                borderRadius: 0,
+                borderBottom: "1px solid transparent", // Corrected the typo
+                transition: "all 0.3s ease",
+                ":hover": { borderBottom: "1px solid black" },
+              }}
+            >
               Home
             </Button>
-            <Button variant="text" onClick={() => navigate("/about-us")}>
+            <Button
+              variant="text"
+              onClick={() => navigate("/about-us")}
+              sx={{
+                m: 1,
+                borderRadius: 0,
+                borderBottom: "1px solid transparent", // Corrected the typo
+                transition: "all 0.3s ease",
+                ":hover": { borderBottom: "1px solid black" },
+              }}
+            >
               About
             </Button>
-            <Button variant="text" onClick={() => navigate("/history")}>
+            <Button
+              variant="text"
+              onClick={() => navigate("/history")}
+              sx={{
+                m: 1,
+                borderRadius: 0,
+                borderBottom: "1px solid transparent", // Corrected the typo
+                transition: "all 0.3s ease",
+                ":hover": { borderBottom: "1px solid black" },
+              }}
+            >
               History
+            </Button>
+            <Button
+              variant="text"
+              onClick={() => navigate("/appointments")}
+              sx={{
+                m: 1,
+                borderRadius: 0,
+                borderBottom: "1px solid transparent", // Corrected the typo
+                transition: "all 0.3s ease",
+                ":hover": { borderBottom: "1px solid black" },
+              }}
+            >
+              Appointments
             </Button>
             {!isLoggedIn ? (
               <>
-                <Button variant="outlined" onClick={() => navigate("/login")}>
+                <Button
+                  variant="outlined"
+                  onClick={() => navigate("/login")}
+                >
                   LogIn
                 </Button>
                 <Button
                   variant="outlined"
                   onClick={() => navigate("/register")}
+                  sx={{ m: 1 }}
                 >
                   SignUp
                 </Button>

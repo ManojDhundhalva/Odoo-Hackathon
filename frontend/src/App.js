@@ -11,6 +11,7 @@ import History from "./Pages/History";
 import Appointments from "./Pages/Appointments";
 import CollectorDashboard from "./Pages/CollectorDashboard";
 import "./App.css";
+import { Grid } from "@mui/material";
 
 const themeStyle = {
   typography: {
@@ -25,20 +26,25 @@ function App() {
   const theme = createTheme(themeStyle);
 
   return (
-    <ThemeProvider theme={theme}>
-      {!isHiddenPath && <Navbar />}
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/" element={<HomePage />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/about-us" element={<AboutUs />} />
-        <Route path="/appointments" element={<Appointments />} />
-        <Route path="/history" element={<History />} />
-        <Route path="/collectorDashboard" element={<CollectorDashboard />} />
-      </Routes>
-      {!isHiddenPath && <Footer />}
-    </ThemeProvider>
+    <Grid id="style-1" sx={{ width: "100%", height: "100vh" }}>
+      <ThemeProvider theme={theme}>
+        {!isHiddenPath && <Navbar />}
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/appointments" element={<Appointments />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/appointments" element={<Appointments />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/collectorDashboard" element={<CollectorDashboard />} />
+        </Routes>
+        {!isHiddenPath && <Footer />}
+      </ThemeProvider>
+    </Grid>
   );
 }
 

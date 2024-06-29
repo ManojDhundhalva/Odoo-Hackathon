@@ -1,10 +1,11 @@
 import React from "react";
 import SearchBox from "../Components/SearchBox";
+import Intro from "../Components/Intro";
 
 function HomePage() {
   return (
     <>
-      <div>HomePage</div>
+      <Intro />
       {window.localStorage.getItem("user") === null && <SearchBox />}
     </>
   );
