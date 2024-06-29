@@ -50,6 +50,9 @@ function NavBar() {
         <ListItem button onClick={() => navigate("/history")}>
           <ListItemText primary="History" />
         </ListItem>
+        <ListItem button onClick={() => navigate("/appointments")}>
+          <ListItemText primary="Appointments" />
+        </ListItem>
         {!isLoggedIn ? (
           <>
             <ListItem button onClick={() => navigate("/login")}>
@@ -87,7 +90,7 @@ function NavBar() {
       margin={0}
       justifyContent="space-between"
       alignItems="center"
-      sx={{ backgroundColor: "lavender",  }}
+      sx={{ backgroundColor: "lavender" }}
     >
       <Grid item>
         <Typography fontWeight="bold" fontSize="large">
@@ -124,6 +127,9 @@ function NavBar() {
             </Button>
             <Button variant="text" onClick={() => navigate("/history")}>
               History
+            </Button>
+            <Button variant="text" onClick={() => navigate("/appointments")}>
+              Appointments
             </Button>
             {!isLoggedIn ? (
               <>

@@ -6,23 +6,26 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./Context/auth";
+import { GlobalProvider } from "./Context/globalData";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <App />
-        <Toaster
-          position="top-center"
-          toastOptions={{
-            style: {
-              zIndex: 9999,
-              fontFamily: "Quicksand",
-              fontWeight: "600",
-            },
-          }}
-        />
+        <GlobalProvider>
+          <App />
+          <Toaster
+            position="top-center"
+            toastOptions={{
+              style: {
+                zIndex: 9999,
+                fontFamily: "Quicksand",
+                fontWeight: "600",
+              },
+            }}
+          />
+        </GlobalProvider>
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
