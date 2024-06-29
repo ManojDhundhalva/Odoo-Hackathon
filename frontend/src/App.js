@@ -9,6 +9,7 @@ import Profile from "./Pages/Profile";
 import AboutUs from "./Pages/AboutUs";
 import History from "./Pages/History";
 import Appointments from "./Pages/Appointments";
+import CollectorDashboard from "./Pages/CollectorDashboard";
 import "./App.css";
 
 const themeStyle = {
@@ -33,7 +34,11 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/appointments" element={<Appointments />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/appointments" element={<Appointments />} />
         <Route path="/history" element={<History />} />
+        <Route path="/collectorDashboard" element={<CollectorDashboard />} />
       </Routes>
       {!isHiddenPath && <Footer />}
     </ThemeProvider>

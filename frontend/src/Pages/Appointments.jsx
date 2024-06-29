@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import "./Appointments.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useGlobal } from "../Context/globalData";
 import { toast } from "react-hot-toast";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import "../CSS/Appointments.css";
 
 const Appointments = () => {
   const navigate = useNavigate();
