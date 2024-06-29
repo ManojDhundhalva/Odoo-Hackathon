@@ -1,5 +1,6 @@
 .appointments-container {
   padding: 20px;
+  height:100vh;
   font-family: Arial, sans-serif;
   color: #0d2818; /* Set text color */
   display: flex;

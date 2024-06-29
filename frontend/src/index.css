@@ -1,18 +1,55 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #C5D2EF;
-  background-size: cover; /* Ensure the background image covers the entire body */
+/* Global Styles */
+html, body {
+  height: 100%; /* Ensure the body covers the full height of the viewport */
+  margin: 0; /* Remove default margin */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; /* System font stack */
+  -webkit-font-smoothing: antialiased; /* Improve text rendering */
+  -moz-osx-font-smoothing: grayscale; /* Improve text rendering on Firefox for macOS */
+  background-color: #C5D2EF; /* Background color */
+  background-size: cover; /* Cover the entire body with the background image */
   background-position: center; /* Center the background image */
   background-repeat: no-repeat; /* Prevent the background image from repeating */
-  background-attachment: fixed; /* Make the background image fixed when scrolling */
+  background-attachment: fixed; /* Keep the background image fixed during scrolling */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
+/* Global Container */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure the container covers the full viewport height */
+}
+
+/* Footer Styling */
+footer {
+  margin-top: auto; /* Push the footer to the bottom if content is short */
+  background-color: #296066; /* Footer background color */
+  color: white; /* Footer text color */
+}
+
+/* Code styling */
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace; /* Code font stack */
+}
+
+/* Optional: Additional global resets and improvements */
+* {
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+a {
+  text-decoration: none; /* Remove underline from links */
+}
+
+a:hover {
+  text-decoration: underline; /* Add underline on hover for better accessibility */
+}
+
+ul, ol {
+  padding: 0; /* Remove default padding from lists */
+  margin: 0; /* Remove default margin from lists */
+}
+
+li {
+  list-style: none; /* Remove default list styling */
 }
