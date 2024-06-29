@@ -2,29 +2,31 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CircularProgress from "@mui/material/CircularProgress";
-import PlaceIcon from "@mui/icons-material/Place";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
-
 import {
   Grid,
   Typography,
   TextField,
   Button,
-  FormControlLabel,
-  RadioGroup,
-  Radio,
-  FormLabel,
+  FormControl,
   Select,
+  InputLabel,
   MenuItem,
 } from "@mui/material";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import axios from "axios";
+import ProfileHistory from "../Components/ProfileHistory.jsx";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import { useGlobal } from "../Context/globalData";
 
 import { useAuth } from "../Context/auth";
 import config from "../config.js";
@@ -51,6 +53,25 @@ const Profile = () => {
   const { setIsLoggedIn, verifyUser, LogOut } = useAuth();
 
   const [justVerify, setJustVerify] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  const { users } = useGlobal();
+  const [wastType, setWastType] = useState("");
+  const [newQuantity, setNewQuantity] = useState("");
+
+  const handleNewQuantity = (e) => {
+    const input = e.target.value;
+    if (/^\d*$/.test(input)) {
+      setNewQuantity(input);
+    }
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handlePhoneNumber = (e) => {
     const input = e.target.value;
@@ -282,7 +303,16 @@ const Profile = () => {
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
+            <Grid
+              item
+              margin={0}
+              padding={0}
+              xs={12}
+              sm={6}
+              md={6}
+              lg={6}
+              xl={6}
+            >
               <Card>
                 <CardContent>
                   <Grid container spacing={2} style={{ marginLeft: "0.1em" }}>
@@ -461,6 +491,11 @@ const Profile = () => {
                         fullWidth
                       />
                     </Grid>
+                    {window.localStorage.getItem("role") === "user" ? (
+                      <ProfileHistory />
+                    ) : (
+                      <></>
+                    )}
                     {window.localStorage.getItem("role") === "disposer" ? (
                       <>
                         <Grid item xs={10} style={{ marginTop: "0.4em" }}>
@@ -538,6 +573,125 @@ const Profile = () => {
                               },
                             }}
                           />
+                        </Grid>
+                        <Grid item xs={10}>
+                          <React.Fragment>
+                            <Button
+                              variant="outlined"
+                              onClick={handleClickOpen}
+                            >
+                              Add more
+                            </Button>
+                            <Dialog
+                              open={open}
+                              onClose={handleClose}
+                              aria-labelledby="alert-dialog-title"
+                              aria-describedby="alert-dialog-description"
+                            >
+                              <DialogTitle id="alert-dialog-title">
+                                ADD Waste
+                              </DialogTitle>
+                              <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                  <Grid>
+                                    <Grid item padding={1} margin={0}>
+                                      <FormControl
+                                        size="small"
+                                        fullWidth
+                                        required
+                                        margin="normal"
+                                      >
+                                        <InputLabel id="type-label">
+                                          Type
+                                        </InputLabel>
+                                        <Select
+                                          margin="normal"
+                                          labelId="type-label"
+                                          id="type"
+                                          required
+                                          fullWidth
+                                          label="Type"
+                                          name="type"
+                                          value={wastType}
+                                          onChange={(e) => {
+                                            setWastType(e.target.value);
+                                          }}
+                                          error={justVerify && wastType === ""}
+                                          sx={{
+                                            minWidth: "400px",
+                                            borderRadius: "12px",
+                                            fontWeight: "bold",
+                                          }}
+                                        >
+                                          <MenuItem value="">
+                                            Select Role
+                                          </MenuItem>
+                                          {users.map((item, index) => (
+                                            <MenuItem
+                                              key={index}
+                                              value={item.type}
+                                            >
+                                              <Typography fontWeight="bold">
+                                                {item.type}
+                                              </Typography>
+                                            </MenuItem>
+                                          ))}
+                                        </Select>
+                                      </FormControl>
+                                    </Grid>
+                                    <Grid item padding={1} margin={0}>
+                                      <TextField
+                                        size="small"
+                                        id="quantity"
+                                        label="Quantity"
+                                        value={newQuantity}
+                                        onChange={handleNewQuantity}
+                                        fullWidth
+                                        autoComplete="off"
+                                        error={newQuantity === ""}
+                                        helperText={
+                                          newQuantity === ""
+                                            ? "Quantity cannot be empty."
+                                            : ""
+                                        }
+                                        sx={{
+                                          "& .MuiOutlinedInput-root": {
+                                            borderRadius: "12px",
+                                            fontWeight: "bold",
+                                          },
+                                        }}
+                                      />
+                                    </Grid>
+                                  </Grid>
+                                </DialogContentText>
+                              </DialogContent>
+                              <DialogActions>
+                                <Button
+                                  variant="outlined"
+                                  onClick={handleClose}
+                                  color="error"
+                                >
+                                  Cancel
+                                </Button>
+                                <Button
+                                  variant="contained"
+                                  onClick={() => {
+                                    handleClose();
+                                  }}
+                                  autoFocus
+                                  sx={{
+                                    color: "white",
+                                    backgroundColor: "#2A386B",
+                                    "&:hover": {
+                                      backgroundColor: "#2A386B",
+                                    },
+                                  }}
+                                >
+                                  Add
+                                </Button>
+                              </DialogActions>
+                            </Dialog>
+                          </React.Fragment>
                         </Grid>
                       </>
                     ) : (
