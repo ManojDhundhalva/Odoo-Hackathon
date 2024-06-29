@@ -1,0 +1,89 @@
+.appointments-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  color: #0d2818; /* Set text color */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+  background-size: cover; /* Ensure the background image covers the entire container */
+  background-position: center; /* Center the background image */
+  background-repeat: no-repeat; /* Prevent the background image from repeating */
+  background-attachment: fixed; /* Make the background image fixed when scrolling */
+}
+
+.calendar-container {
+  transform: scale(1.2); /* Zoom in by 20% */
+  transform-origin: top left; /* Adjust the origin point for scaling */
+}
+
+/* Adjust calendar width within the container */
+.appointments-container > .react-calendar {
+  width: 60%; /* Adjust as needed */
+}
+
+/* Custom styles for the calendar */
+.react-calendar {
+  background-color: #f0f0f0; /* Change this to your desired background color */
+}
+
+.react-calendar__month-view {
+  background-color: #ffffff; /* Background color for the month view area */
+}
+
+.react-calendar__tile {
+  background-color: #e6e6e69e; /* Background color for each tile */
+}
+
+.react-calendar__tile--active {
+  background-color: #e6e6e62b; /* Background color for the selected day */
+}
+
+.react-calendar__tile--now {
+  background-color: #cfd8dc; /* Background color for the current day */
+}
+
+.react-calendar__navigation button {
+  background-color: #296066; /* Background color for navigation buttons */
+  color: white; /* Text color for navigation buttons */
+}
+
+.react-calendar__navigation__label {
+  background-color: #296066; /* Background color for the title */
+  color: white; /* Text color for the title */
+}
+
+.slots-container {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically (heading and buttons) */
+  align-items: center; /* Center items horizontally */
+  gap: 10px; /* Add space between heading and buttons */
+  margin-top: 20px;
+}
+
+.available-slots-heading {
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: #0d2818; /* Set text color for heading */
+}
+
+.buttons-container {
+  display: flex; /* Align buttons horizontally */
+  flex-wrap: wrap; /* Allow wrapping of buttons if they overflow */
+  gap: 10px; /* Space between buttons */
+}
+
+.slots-container button {
+  width:15rem;
+  height: 2.5rem;
+  background-color: #296066; /* Background color for buttons */
+  color: white; /* Text color for buttons */
+  border: none; /* Remove default border */
+  padding: 10px 15px; /* Add padding to buttons */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  white-space: nowrap; /* Prevent text from wrapping */
+  font-size: 18px; /* Font size */
+}
+
+.slots-container button:hover {
+  background-color: #075962; /* Slightly darker background on hover */
+}
