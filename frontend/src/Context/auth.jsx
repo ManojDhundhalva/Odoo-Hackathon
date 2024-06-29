@@ -6,37 +6,40 @@ const authContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [theme, setTheme] = useState("light");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [role, setRole] = useState("");
   const navigate = useNavigate();
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
 
-  // useEffect(() => {
-  //   if (window.localStorage.getItem("token") === null) {
-  //     setIsLoggedIn(false);
-  //     navigate("/login");
-  //   } else {
-  //     setIsLoggedIn(true);
-  //     navigate("/");
-  //   }
-  // }, []);
+  useEffect(() => {
+    setIsLoggedIn(window.localStorage.getItem("token") !== null);
+    setRole(window.localStorage.getItem("role"));
+  }, []);
 
   const LogOut = () => {
     window.localStorage.removeItem("token");
     window.localStorage.removeItem("role");
     setIsLoggedIn(false);
-    navigate("/login");
+    setRole("");
+    navigate("/");
   };
 
-  const verifyUser = () => {
+  useEffect(() => {
     if (
-      window.localStorage.getItem("token") === null ||
-      window.localStorage.getItem("role") === null
+      !(
+        window.localStorage.getItem("token") !== null &&
+        window.localStorage.getItem("role") !== null
+      )
     ) {
-      LogOut();
+      window.localStorage.removeItem("token");
+      window.localStorage.removeItem("role");
+      setIsLoggedIn(false);
+      setRole("");
+      navigate("/");
     }
-  };
+  }, []);
 
   return (
     <authContext.Provider
@@ -45,8 +48,9 @@ export const AuthProvider = ({ children }) => {
         toggleTheme,
         isLoggedIn,
         setIsLoggedIn,
+        role,
+        setRole,
         LogOut,
-        verifyUser,
       }}
     >
       {children}
