@@ -86,7 +86,7 @@ export default function Register() {
     setloading(true);
     if (password === repassword) {
       await axios
-        .post(config.BACKEND_API + "/signup", {
+        .post(config.BACKEND_API + "/sign-up", {
           username: username,
           email: email,
           name: name,
