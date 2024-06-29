@@ -1,40 +1,51 @@
 .collector-dashboard {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-  }
-  
-  .dashboard-heading {
-    text-align: center;
-    color:#0d2818;
-    margin-bottom: 20px;
-  }
-  
-  .tasks-container {
-    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-  }
-  
-  .task-card {
-    width: 80%;
-    padding: 20px;
-    color:aliceblue;
-    border: 1px solid #000;
-    border-radius: 8px;
-    background-color:#296066;
-  }
-  
-  .task-card p {
-    margin: 5px 0;
-  }
-  
-  .task-card b {
-    color:aliceblue;
-  }
-  
-  .tasks-container :hover{
-    background-color: #075962;
-  }
-  
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  height: 100vh;
+}
+
+.dashboard-heading {
+  text-align: center;
+  color: #0d2818;
+  margin-bottom: 20px;
+}
+
+.tasks-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.task-card {
+  width: 80%;
+  padding: 20px;
+  color: aliceblue;
+  border: 1px solid #000;
+  border-radius: 8px;
+  background-color: #296066;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+}
+
+.task-card p {
+  margin: 5px 0;
+}
+
+.task-card .left-aligned {
+  font-size: 20px; /* Larger font size for left-aligned content */
+}
+
+.task-card .right-aligned {
+  font-size: 14px; /* Smaller font size for right-aligned content */
+  text-align: right; /* Align text to the right */
+}
+
+.task-card b {
+  color: aliceblue;
+}
+
+.tasks-container :hover {
+  background-color: #075962;
+}
