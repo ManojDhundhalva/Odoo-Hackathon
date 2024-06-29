@@ -7,10 +7,11 @@ function HomePage() {
   return (
     <>
       <Intro />
-      {window.localStorage.getItem("user") === null && <SearchBox /> }
-      <CollectorDashboard />
+      {window.localStorage.getItem("role") === "user" && <SearchBox />}
+      {window.localStorage.getItem("role") === "disposer" && (
+        <CollectorDashboard />
+      )}
     </>
-
   );
 }
 

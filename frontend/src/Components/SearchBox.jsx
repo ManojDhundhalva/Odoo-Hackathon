@@ -17,7 +17,7 @@ import { useGlobal } from "../Context/globalData";
 function SearchBox() {
   const { users } = useGlobal();
 
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(false);
   const [type, setType] = useState("");
   const [quantity, setQuantity] = useState("");
   const [distance, setDistance] = useState("");
@@ -146,6 +146,9 @@ function SearchBox() {
             <Button
               fullWidth
               variant="outlined"
+              onClick={() => {
+                setSearch(true);
+              }}
               startIcon={<SearchRoundedIcon />}
               sx={{
                 fontSize: 16,
@@ -161,35 +164,36 @@ function SearchBox() {
             </Button>
           </Grid>
         </Grid>
-        {users.map((item, index) => (
-          <Grid key={index} item xs={12} margin={0} paddingX={8} paddingY={1}>
-            <Grid
-              onClick={() => {
-                navigate(
-                  `/appointments?username=${encodeURIComponent(
-                    item.username
-                  )}&type=${encodeURIComponent(item.type)}`
-                );
-              }}
-              margin={0}
-              padding={2}
-              sx={{
-                alignItems: "center",
-                borderRadius: "16px",
-                transition: "transform 0.2s ease",
-                backgroundColor: "lavender",
-                "&:hover": {
-                  transform: "scale(1.01)",
-                  backgroundColor: "#2A386B",
-                  color: "white",
-                },
-              }}
-            >
-              <Typography fontWeight="bold">{item.username}</Typography>
-              <Typography fontWeight="bold">{item.type}</Typography>
+        {search &&
+          users.map((item, index) => (
+            <Grid key={index} item xs={12} margin={0} paddingX={8} paddingY={1}>
+              <Grid
+                onClick={() => {
+                  navigate(
+                    `/appointments?username=${encodeURIComponent(
+                      item.username
+                    )}&type=${encodeURIComponent(item.type)}`
+                  );
+                }}
+                margin={0}
+                padding={2}
+                sx={{
+                  alignItems: "center",
+                  borderRadius: "16px",
+                  transition: "transform 0.2s ease",
+                  backgroundColor: "lavender",
+                  "&:hover": {
+                    transform: "scale(1.01)",
+                    backgroundColor: "#2A386B",
+                    color: "white",
+                  },
+                }}
+              >
+                <Typography fontWeight="bold">{item.username}</Typography>
+                <Typography fontWeight="bold">{item.type}</Typography>
+              </Grid>
             </Grid>
-          </Grid>
-        ))}
+          ))}
       </Grid>
     </>
   );
