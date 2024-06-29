@@ -126,26 +126,70 @@ function NavBar() {
           </>
         ) : (
           <>
-            <Button variant="text" onClick={() => navigate("/")}>
+            <Button
+              variant="text"
+              onClick={() => navigate("/")}
+              sx={{
+                m: 1,
+                borderRadius: 0,
+                borderBottom: "1px solid transparent", // Corrected the typo
+                transition: "all 0.3s ease",
+                ":hover": { borderBottom: "1px solid black" },
+              }}
+            >
               Home
             </Button>
-            <Button variant="text" onClick={() => navigate("/about-us")}>
+            <Button
+              variant="text"
+              onClick={() => navigate("/about-us")}
+              sx={{
+                m: 1,
+                borderRadius: 0,
+                borderBottom: "1px solid transparent", // Corrected the typo
+                transition: "all 0.3s ease",
+                ":hover": { borderBottom: "1px solid black" },
+              }}
+            >
               About
             </Button>
-            <Button variant="text" onClick={() => navigate("/history")}>
+            <Button
+              variant="text"
+              onClick={() => navigate("/history")}
+              sx={{
+                m: 1,
+                borderRadius: 0,
+                borderBottom: "1px solid transparent", // Corrected the typo
+                transition: "all 0.3s ease",
+                ":hover": { borderBottom: "1px solid black" },
+              }}
+            >
               History
             </Button>
-            <Button variant="text" onClick={() => navigate("/appointments")}>
+            <Button
+              variant="text"
+              onClick={() => navigate("/appointments")}
+              sx={{
+                m: 1,
+                borderRadius: 0,
+                borderBottom: "1px solid transparent", // Corrected the typo
+                transition: "all 0.3s ease",
+                ":hover": { borderBottom: "1px solid black" },
+              }}
+            >
               Appointments
             </Button>
             {!isLoggedIn ? (
               <>
-                <Button variant="outlined" onClick={() => navigate("/login")}>
+                <Button
+                  variant="outlined"
+                  onClick={() => navigate("/login")}
+                >
                   LogIn
                 </Button>
                 <Button
                   variant="outlined"
                   onClick={() => navigate("/register")}
+                  sx={{ m: 1 }}
                 >
                   SignUp
                 </Button>

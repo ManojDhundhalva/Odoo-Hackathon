@@ -4,7 +4,7 @@ import image1 from "../images/image1.jpg";
 
 export default function Intro() {
   return (
-    <Container maxWidth="xl" sx={{ my: 2, userSelect: "none" }}>
+    <Container maxWidth="xl" sx={{ mb: 2, userSelect: "none" }}>
       <Box
         sx={{
           display: "flex",
