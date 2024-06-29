@@ -33,16 +33,6 @@ export default function Footer() {
                   Link 2
                 </a>
               </li>
-              <li>
-                <a href='https://github.com/Dharmesh-Kota/Odoo-Hackathon/tree/master' className='text-white'>
-                  Link 3
-                </a>
-              </li>
-              <li>
-                <a href='https://github.com/Dharmesh-Kota/Odoo-Hackathon/tree/master' className='text-white'>
-                  Link 4
-                </a>
-              </li>
             </ul>
           </MDBCol>
 
@@ -57,16 +47,6 @@ export default function Footer() {
               <li>
                 <a href='https://github.com/Dharmesh-Kota/Odoo-Hackathon/tree/master' className='text-white'>
                   Link 2
-                </a>
-              </li>
-              <li>
-                <a href='https://github.com/Dharmesh-Kota/Odoo-Hackathon/tree/master' className='text-white'>
-                  Link 3
-                </a>
-              </li>
-              <li>
-                <a href='https://github.com/Dharmesh-Kota/Odoo-Hackathon/tree/master' className='text-white'>
-                  Link 4
                 </a>
               </li>
             </ul>
