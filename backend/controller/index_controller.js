@@ -44,6 +44,8 @@ export const profile = async (req, res) => {
         if (user.role === 'Disposer') {
             let disposer = await Disposer.findOne({ username: req.user.id });
             user = {...user, processing_methods: disposer.processing_methods, quantity: disposer.quantity, license_number: disposer.license_number};
+            let wasteTypes = await WastePrice.find({ disposer: req.params.id });
+            user = {...user, wasteTypes: wasteTypes};
         }
         return res.status(200).json({ message: 'User found!', user: user });
     } catch (error) {
@@ -72,5 +74,35 @@ export const update_profile = async (req, res) => {
     } catch (error) {
         console.log('Error: ', error);
         return res.status(500).json({ error: error });
+    }
+}
+
+// Profile details of Disposer
+export const disposer_profile = async (req, res) => {
+    try {
+        let user = await User.findById(req.params.id, {name: 1, username: 1, email: 1, role: 1, contact: 1, address: 1, location: 1});
+        let disposer = await Disposer.findOne({ username: req.user.id });
+        user = {...user, processing_methods: disposer.processing_methods, quantity: disposer.quantity, license_number: disposer.license_number};
+        let wasteTypes = await WastePrice.find({ disposer: req.params.id });
+        user = {...user, wasteTypes: wasteTypes};
+        return res.status(200).json({ message: 'User found!', user: user });
+    } catch (error) {
+        console.log('Error: ', error);
+        return res.status(500).json({ error: error });
+    }
+}
+
+// Check if username is valid
+export const checkUsername = async (req, res) => {
+    try {
+        let user = await User.findOne({ username: req.body.username });
+        if (user) {
+            return res.status(200).json({ message: 'Username is valid!' });
+        }
+        return res.status(409).json({ error: 'Username is invalid!'});
+
+    } catch (error) {
+        console.log(error.message);
+        return res.status(500).send({ error: error.message });
     }
 }

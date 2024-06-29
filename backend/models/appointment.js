@@ -14,7 +14,7 @@ const apointmentScehma = new mongoose.Schema({
         required: true
     },
     slot: {
-        type: String,
+        type: Number,
         required: true
     },
     waste_type: {

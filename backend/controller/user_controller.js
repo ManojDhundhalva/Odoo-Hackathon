@@ -2,13 +2,17 @@ import User from '../models/user.js'
 import Appointment from '../models/appointment.js'
 import WastePrice from '../models/waste_price.js'
 import Disposer from '../models/disposer.js'
+import { book_appointment_disposer } from '../mailer/book_appointment.js'
+import { book_appointment_user } from '../mailer/book_appointment.js'
+import axios from 'axios'
+
 
 export const available_disposers = async (req, res) => {
     try {
 
         // If the user has not updated the location, return an error
         let location = await User.findById(req.user.id, { location: 1 }).lean();
-
+        location = location.location;
         if(!location) {
             return res.status(422).json({message: "Location not updated!"});
         }
@@ -27,6 +31,7 @@ export const available_disposers = async (req, res) => {
             if (!wasteType) {
                 users = users.filter((u) => u.username !== user.username);
             } else {
+                user.wasteType = req.body.waste_type
                 user.price = wasteType.price;
             }
         }
@@ -73,6 +78,54 @@ export const available_disposers = async (req, res) => {
     }
 }
 
+// Check if the disposer is available on the given slot
+export const check_availability = async (req, res) => {
+    try {
+        let date = req.body.date;
+        let slots = await Appointment.find({ disposer: req.body.username, date: date });
+        let available_slots = [1, 2, 3, 4];   // 1: 9-11, 2: 11-1, 3: 2-4, 4: 4-6
+        
+        for (let slot of slots) {
+            available_slots = available_slots.filter((s) => s !== slot.slot);
+        }
+
+        return res.status(200).json({ available_slots: available_slots });
+
+    } catch (err) {
+        console.log('Error: ', err);
+        return res.redirect('back');
+    }
+}
+
+// Book an appointment
+export const book_appointment = async (req, res) => {
+    try {
+        let appointment = await Appointment.create({
+            user: req.user.username,
+            disposer: req.body.username,
+            date: req.body.date,
+            slot: req.body.slot,
+            waste_type: req.body.waste_type,
+            status: 'pending',
+            transaction_id: req.body.transaction_id
+        });
+
+        let disposer = await User.findOne({ username: req.body.username });
+        let user = await User.findOne({ username: req.user.username });
+
+        // Send mail to the disposer
+        book_appointment_user(disposer, req.user.email, user.name, date);
+        book_appointment_disposer(user, disposer.email, disposer.name, date);
+
+        return res.status(201).json({ message: 'Appointment booked successfully!' });
+
+    } catch (err) {
+        console.log('Error: ', err);
+        return res.status(500).json({ error: 'Server Error!' });
+    }
+}
+
+// Check the past appointments of the user
 export const history = async (req, res) => {
     try {
         let appointments = await Appointment.find({ disposer: req.user.username, status: { $in: ['completed', 'cancelled', 'pending']} });

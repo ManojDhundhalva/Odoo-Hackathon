@@ -1,6 +1,7 @@
 import User from '../models/user.js'
 import Appointment from '../models/appointment.js'
 import WastePrice from '../models/waste_price.js'
+import { waste_collected } from '../mailer/waste_collected.js'
 
 export const tasks = async (req, res) => {
     try {
@@ -25,6 +26,12 @@ export const updateStatus = async (req, res) => {
     try {
         
         await Appointment.updateOne({ _id: req.body.appointmentId }, { status: req.body.status });
+        let user = await Appointment.findById(req.body.appointmentId, { user: 1 });
+        user = await User.findOne({username: user.user}, {email: 1});
+
+        // Send mail to the user
+        waste_collected(user.email, req.user);
+
         return res.status(200).json({ message: 'Status updated successfully' });
 
     } catch (error) {
@@ -44,6 +51,24 @@ export const history = async (req, res) => {
         }
 
         return res.status(200).json(appointments);
+        
+    } catch (error) {
+        console.log('Error: ', error);
+        return res.status(500).json({ error: error });
+    }
+}
+
+// Add new waste
+export const addWaste = async (req, res) => {
+    try {
+        
+        await WastePrice.create({
+            disposer: req.user.username,
+            wasteType: req.body.wasteType,
+            price: req.body.price
+        });
+
+        return res.status(201).json({ message: 'Waste added successfully!' });
         
     } catch (error) {
         console.log('Error: ', error);
