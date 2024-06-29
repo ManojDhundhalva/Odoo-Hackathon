@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes, useLocation } from "react-router-dom";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import Navbar from "./Components/Navbar";
+import Footer from "./Components/Footer";
+import Login from "./Pages/Login";
+import Register from "./Pages/Register";
+import HomePage from "./Pages/HomePage";
+import "./App.css";
+
+const themeStyle = {
+  typography: {
+    fontFamily: "Quicksand",
+  },
+};
 
 function App() {
+  const location = useLocation();
+  const hiddenPaths = ["/login", "/register"];
+  const isHiddenPath = hiddenPaths.includes(location.pathname);
+  const theme = createTheme(themeStyle);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      {!isHiddenPath && <Navbar />}
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/" element={<HomePage />} />
+      </Routes>
+      {!isHiddenPath && <Footer />}
+    </ThemeProvider>
   );
 }
 
