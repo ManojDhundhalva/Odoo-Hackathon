@@ -90,7 +90,14 @@ function NavBar() {
       margin={0}
       justifyContent="space-between"
       alignItems="center"
-      sx={{ backgroundColor: "lavender" }}
+      sx={{
+        backgroundColor: "transparent",
+        backdropFilter: "blur(10px)",
+        position: "sticky",
+        top: 0,
+        width: "100%",
+        zIndex: 1000, // Adjust the zIndex as needed
+      }}
     >
       <Grid item>
         <Typography fontWeight="bold" fontSize="large">
